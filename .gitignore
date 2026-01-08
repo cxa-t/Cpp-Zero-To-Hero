@@ -1,0 +1,18 @@
+# 忽略 Visual Studio 临时文件
+.vs/
+.vscode/
+*.user
+*.suo
+*.ipch
+*.aps
+
+# 忽略编译生成的文件夹
+x64/
+Debug/
+Release/
+ipch/
+
+# 忽略其他垃圾文件
+*.pdb
+*.iobj
+*.ipdb
