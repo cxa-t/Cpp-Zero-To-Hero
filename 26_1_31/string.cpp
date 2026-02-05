@@ -133,16 +133,116 @@ namespace csa
 		}
 	}
 
-	//size_t string::find(char ch, size_t pos)
-	//{
+	size_t string::find(char ch, size_t pos)
+	{
+		assert(pos < _size);
+		for (size_t i = pos; i < _size; i++)
+		{
+			if (_str[i] == ch)
+				return i;
+		}
+		return npos;
+	}
 
-	//}
-	//size_t string::find(const char* str, size_t pos)
-	//{
+	size_t string::find(const char* str, size_t pos)
+	{
+		assert(pos < _size);
+		char* tmp = strstr(_str + pos, str);
+		if (tmp == nullptr)
+			return npos;
+		else
+			return tmp - _str;
+	}
 
-	//}
-	//string string::substr(size_t pos, size_t len)
-	//{
+	string string::substr(size_t pos, size_t len)
+	{
+		assert(pos < _size);
+		if (len > _size - pos)
+			len = _size - pos;
+		string sub;
+		sub.reserve(len);
+		for (size_t i = 0; i < len; i++)
+		{
+			sub += _str[pos + i];
+		}
+		return sub;
+	}
 
-	//}
+	bool operator<(const string& s1, const string& s2)
+	{
+		return strcmp(s1.c_str(), s2.c_str()) < 0;
+	}
+	bool operator==(const string& s1, const string& s2)
+	{
+		return strcmp(s1.c_str(), s2.c_str()) == 0;
+	}
+	bool operator<=(const string& s1, const string& s2)
+	{
+		return s1 < s2 || s1 == s2;
+	}
+	bool operator>(const string& s1, const string& s2)
+	{
+		return !(s1 <= s2);
+	}
+	bool operator>=(const string& s1, const string& s2)
+	{
+		return !(s1 < s2);
+	}
+	bool operator!=(const string& s1, const string& s2)
+	{
+		return !(s1 == s2);
+	}
+
+	ostream& operator<<(ostream& out, const string& s)
+	{
+		for (auto ch : s)
+		{
+			out << ch;
+		}
+		return out;
+	}
+
+	istream& operator>>(istream& in, string& s)
+	{
+		//s.clear();
+		//char ch;
+		////cin提取不到空格换行 所以需要一个字符一个字符提取
+		//ch = in.get();
+		//while (ch != ' ' && ch != '\n')
+		//{
+		//	s += ch;
+		//	ch = in.get();
+		//}
+		//return in;
+
+		s.clear();
+		const int N = 256;
+		char buff[N];
+		char ch;
+		int i = 0;
+		ch = in.get();
+
+		while (ch == ' ' || ch == '\n') 
+		{
+			ch = in.get(); // 跳过开头的空格和换行
+		}
+
+		while (ch != ' ' && ch != '\n')
+		{
+			buff[i++] = ch;
+			if (i == N - 1)
+			{
+				buff[i] = '\0';
+				s += buff;
+				i = 0;
+			}
+			ch = in.get();
+		}
+		if (i > 0)
+		{
+			buff[i] = '\0';
+			s += buff;
+		}
+		return in;
+	}
 }

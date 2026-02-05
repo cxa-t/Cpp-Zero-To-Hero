@@ -11,6 +11,8 @@ namespace csa
 {
 	class string
 	{
+		friend ostream& operator<<(ostream& out, const string& s);
+		friend istream& operator>>(istream& in, string& s);
 	public:
 		typedef char* iterator;
 		typedef const char* const_iterator;
@@ -127,4 +129,14 @@ namespace csa
 
 		static const size_t npos;
 	};
+
+	bool operator<(const string& s1, const string& s2);
+	bool operator<=(const string& s1, const string& s2);
+	bool operator>(const string& s1, const string& s2);
+	bool operator>=(const string& s1, const string& s2);
+	bool operator==(const string& s1, const string& s2);
+	bool operator!=(const string& s1, const string& s2);
+
+	ostream& operator<<(ostream& out, const string& s);
+	istream& operator>>(istream& in, string& s);
 }

@@ -75,7 +75,7 @@ namespace csa
 		cout << s3.c_str() << endl;
 	}
 
-	/*void test_string4()
+	void test_string4()
 	{
 		string s("test.cpp.zip");
 		size_t pos = s.find('.');
@@ -91,27 +91,26 @@ namespace csa
 
 		s = s;
 		cout << s.c_str() << endl;
-	}*/
+	}
 
-	//void test_string5()
-	//{
-	//	string s1("hello world");
-	//	string s2("hello world");
+	void test_string5()
+	{
+		string s1("hello world");
+		string s2("hello world");
 
-	//	cout << (s1 < s2) << endl;
-	//	cout << (s1 == s2) << endl;
-	//	cout << ("hello world" < s2) << endl;
-	//	cout << (s1 == "hello world") << endl;
-	//	//cout << ("hello world" == "hello world") << endl;
+		cout << (s1 < s2) << endl;
+		cout << (s1 == s2) << endl;
+		cout << ("hello world" < s2) << endl;
+		cout << (s1 == "hello world") << endl;
+		//cout << ("hello world" == "hello world") << endl;
 
-	//	cout << s1 << s2 << endl;
+		cout << s1 << s2 << endl;
 
-	//	string s0;
-	//	cin >> s0;
-	//	cout << s0 << endl;
-	//}
+		string s0;
+		cin >> s0;
+		cout << s0 << endl;
+	}
 }
-
 
 int main()
 {
@@ -124,7 +123,11 @@ int main()
 	//s2.insert(0, "csa");
 	//cout << s2.c_str() << endl;
 
-	csa::test_string2();
+	csa::test_string5();
+
+	//csa::string s1;
+	//cin >> s1;
+	//cout << s1;
 
 	return 0;
 }
