@@ -214,9 +214,28 @@ int main()
 		ht2.Insert({ e, e });
 	}
 
-	ht2.Insert({ 100, 100 });
-	ht2.Insert({ 101, 101 });
+	//ht2.Insert({ 100, 100 });
+	//ht2.Insert({ 101, 101 });
 
+
+	cout << ht2.Find(96) << endl;
+	cout << ht2.Find(30) << endl;
+	cout << ht2.Find(19) << endl << endl;
+
+	ht2.Erase(96);
+	ht2.Erase(19);
+	ht2.Erase(30);
+
+	cout << ht2.Find(96) << endl;
+	cout << ht2.Find(30) << endl;
+	cout << ht2.Find(19) << endl<<endl;
+
+	const char* a1[] = { "abcd", "sort", "insert" };
+	hash_bucket::HashTable<string, string> ht1;
+	for (auto& e : a1)
+	{
+		ht1.Insert({ e, e });
+	}
 
 	return 0;
 }

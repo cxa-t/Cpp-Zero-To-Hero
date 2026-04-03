@@ -181,12 +181,34 @@ namespace hash_bucket
 		using Node = HashNode<K, V>;
 	public:
 		HashTable()
-			:_tables(11)
+			:_tables(__stl_next_prime(0))
 			,_n(0)
 		{ }
 
+
+
+		~HashTable()
+		{
+			for (size_t i = 0; i < _tables.size(); i++)
+			{
+				Node* cur = _tables[i];
+				while (cur)
+				{
+					Node* next = cur->_next;
+					delete cur;
+					--_n;
+					cur = next;
+				}
+				_tables[i] = nullptr;
+			}
+		}
+
 		bool Insert(const pair<K, V>& kv)
 		{
+			if (Find(kv.first))
+				return false;
+
+			Hash hash;
 			if (_n == _tables.size())
 			{
 				/*HashTable<K, V> newht;
@@ -202,8 +224,8 @@ namespace hash_bucket
 				}
 				_tables.swap(newht._tables);*/
 
-				//vector<Node*> newtable(__stl_next_prime(_tables.size() + 1));
-				vector<Node*> newtable(_tables.size() * 2);
+				vector<Node*> newtable(__stl_next_prime(_tables.size() + 1));
+				//vector<Node*> newtable(_tables.size() * 2);
 				for (size_t i = 0; i < _tables.size(); i++)
 				{
 					Node* cur = _tables[i];
@@ -211,7 +233,7 @@ namespace hash_bucket
 					{
 						//直接拿下来
 						Node* next = cur->_next;
-						size_t hashi = cur->_kv.first % newtable.size();
+						size_t hashi = hash(cur->_kv.first) % newtable.size();
 						cur->_next = newtable[hashi];
 						newtable[hashi] = cur;
 						cur = next;
@@ -221,12 +243,58 @@ namespace hash_bucket
 				_tables.swap(newtable);
 			}
 
-			size_t hashi = kv.first % _tables.size();
+			size_t hashi = hash(kv.first) % _tables.size();
 			Node* newnode = new Node(kv);
 			newnode->_next = _tables[hashi];
 			_tables[hashi] = newnode;
 			++_n;
 			return true;
+		}
+
+		Node* Find(const K& key)
+		{
+			Hash hash;
+			size_t hashi = hash(key) % _tables.size();
+			Node* cur = _tables[hashi];
+			while (cur)
+			{
+				if (cur->_kv.first == key)
+					return cur;
+				cur = cur->_next;
+			}
+			return nullptr;
+		}
+
+		bool Erase(const K& key)
+		{
+			Hash hash;
+			size_t hashi = hash(key) % _tables.size();
+			Node* prev = nullptr;
+			Node* cur = _tables[hashi];
+			while (cur)
+			{
+				if (cur->_kv.first == key)
+				{
+					if (prev == nullptr)
+					{
+						_tables[hashi] = cur->_next;
+					}
+					else
+					{
+						prev->_next = cur->_next;
+					}
+					delete cur;
+					cur = nullptr;
+					--_n;
+					return true;
+				}
+				else
+				{
+					prev = cur;
+					cur = cur->_next;
+				}
+			}
+			return false;
 		}
 
 	private:
