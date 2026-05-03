@@ -17,6 +17,6 @@ ipch/
 *.iobj
 *.ipdb
 
-*.slh
+*.sln
 *.vcxproj
 *.filters
