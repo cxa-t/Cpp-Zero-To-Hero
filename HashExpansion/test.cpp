@@ -28,9 +28,14 @@ using namespace std;
 //	return 0;
 //}
 
-
+#include"BloomFilter.h"
 int main()
 {
 	//test_bitset1();
-	test_twobitset();
+	//test_twobitset();
+	//TestBloomFilter1();
+
+	int x = 0x0012ff44;
+
+	return 0;
 }
